@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Neon Dash - A fast-paced multiplayer rhythm platformer inspired by Geometry Dash. Play solo, vs AI, local co-op, or online multiplayer!" />
+    <meta name="keywords" content="neon dash, geometry dash, platformer, multiplayer, rhythm game, browser game" />
+    <meta name="author" content="Sukarth" />
+    <meta property="og:title" content="Neon Dash - Multiplayer Rhythm Platformer" />
+    <meta property="og:description" content="A fast-paced multiplayer rhythm platformer. Play solo, vs AI, local co-op, or online!" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Neon Dash - Multiplayer Rhythm Platformer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #0f0f13;
+        font-family: 'Roboto', sans-serif;
+        touch-action: none; /* Prevent zoom/scroll on mobile */
+      }
+      canvas {
+        display: block;
+      }
+      .neon-text {
+        font-family: 'Orbitron', sans-serif;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3), 0 0 30px #00d4ff;
+      }
+      
+      /* Menu Animations */
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+      }
+      .animate-float {
+        animation: float 4s ease-in-out infinite;
+      }
+      
+      @keyframes scanline {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(100%); }
+      }
+      .scanline::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(to bottom, transparent 50%, rgba(0, 212, 255, 0.05) 51%, transparent 52%);
+        background-size: 100% 4px;
+        pointer-events: none;
+      }
+      .scanline-bar {
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 10px;
+        background: rgba(0, 212, 255, 0.1);
+        filter: blur(5px);
+        animation: scanline 6s linear infinite;
+        pointer-events: none;
+      }
+      
+      .menu-btn-clip {
+        clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+      }
+    </style>
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

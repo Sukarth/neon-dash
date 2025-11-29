@@ -1,0 +1,44 @@
+{
+  "name": "neon-dash",
+  "description": "A fast-paced multiplayer rhythm platformer inspired by Geometry Dash",
+  "version": "1.0.0",
+  "type": "module",
+  "author": "Sukarth",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sukarth/neon-dash.git"
+  },
+  "homepage": "https://github.com/sukarth/neon-dash",
+  "bugs": {
+    "url": "https://github.com/sukarth/neon-dash/issues"
+  },
+  "keywords": [
+    "neon-dash",
+    "geometry-dash",
+    "platformer",
+    "multiplayer",
+    "rhythm-game",
+    "browser-game",
+    "react",
+    "typescript",
+    "webrtc"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "@google/genai": "^1.30.0",
+    "react-dom": "^19.2.0",
+    "peerjs": "1.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}
