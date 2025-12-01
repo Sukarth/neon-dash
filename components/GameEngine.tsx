@@ -397,7 +397,34 @@ const GameEngine: React.FC<GameEngineProps> = ({
         const obsW = obs.width || GRID_SIZE;
         const obsPixelX = obs.x * GRID_SIZE;
         const obsPixelY = FLOOR_PIXEL_Y - (obs.y * GRID_SIZE) - obsH;
-        const obsRect = { x: obsPixelX, y: obsPixelY, w: obsW, h: obsH };
+        
+        // Create hitbox with appropriate insets based on obstacle type
+        let obsRect: { x: number, y: number, w: number, h: number };
+        
+        if (obs.type === ObstacleType.SPIKE) {
+          // Significantly smaller hitbox for spikes - triangular shape means edges are less dangerous
+          // Inset 15px from sides and 10px from bottom, 8px from top
+          const spikeInsetX = 15;
+          const spikeInsetBottom = 10;
+          const spikeInsetTop = 8;
+          obsRect = { 
+            x: obsPixelX + spikeInsetX, 
+            y: obsPixelY + spikeInsetTop, 
+            w: obsW - (spikeInsetX * 2), 
+            h: obsH - spikeInsetTop - spikeInsetBottom 
+          };
+        } else if (obs.type === ObstacleType.BLOCK || obs.type === ObstacleType.PLATFORM) {
+          // Slightly smaller hitbox for blocks - 6px inset
+          const blockInset = 6;
+          obsRect = { 
+            x: obsPixelX + blockInset, 
+            y: obsPixelY + blockInset, 
+            w: obsW - (blockInset * 2), 
+            h: obsH - (blockInset * 2) 
+          };
+        } else {
+          obsRect = { x: obsPixelX, y: obsPixelY, w: obsW, h: obsH };
+        }
 
         if (checkCollision(pRect, obsRect)) {
           if (obs.type === ObstacleType.SPIKE) {
