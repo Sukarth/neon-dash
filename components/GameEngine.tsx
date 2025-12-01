@@ -4,7 +4,8 @@ import {
 } from '../types';
 import {
   GRAVITY, JUMP_FORCE, MOVE_SPEED, TERMINAL_VELOCITY,
-  GRID_SIZE, PLAYER_SIZE, CAMERA_OFFSET_X, COLORS, FLOOR_Y_GRID
+  GRID_SIZE, PLAYER_SIZE, CAMERA_OFFSET_X, COLORS, FLOOR_Y_GRID,
+  SPIKE_HITBOX_INSET_X, SPIKE_HITBOX_INSET_TOP, SPIKE_HITBOX_INSET_BOTTOM, BLOCK_HITBOX_INSET
 } from '../constants';
 import { audioService } from '../services/audioService';
 import { PeerService } from '../services/peerService';
@@ -403,24 +404,25 @@ const GameEngine: React.FC<GameEngineProps> = ({
         
         if (obs.type === ObstacleType.SPIKE) {
           // Significantly smaller hitbox for spikes - triangular shape means edges are less dangerous
-          // Inset 15px from sides and 10px from bottom, 8px from top
-          const spikeInsetX = 15;
-          const spikeInsetBottom = 10;
-          const spikeInsetTop = 8;
+          // Clamp insets to ensure positive dimensions
+          const insetX = Math.min(SPIKE_HITBOX_INSET_X, obsW / 2 - 1);
+          const insetTop = Math.min(SPIKE_HITBOX_INSET_TOP, obsH / 2 - 1);
+          const insetBottom = Math.min(SPIKE_HITBOX_INSET_BOTTOM, obsH - insetTop - 1);
           obsRect = { 
-            x: obsPixelX + spikeInsetX, 
-            y: obsPixelY + spikeInsetTop, 
-            w: obsW - (spikeInsetX * 2), 
-            h: obsH - spikeInsetTop - spikeInsetBottom 
+            x: obsPixelX + insetX, 
+            y: obsPixelY + insetTop, 
+            w: Math.max(1, obsW - (insetX * 2)), 
+            h: Math.max(1, obsH - insetTop - insetBottom) 
           };
         } else if (obs.type === ObstacleType.BLOCK || obs.type === ObstacleType.PLATFORM) {
-          // Slightly smaller hitbox for blocks - 6px inset
-          const blockInset = 6;
+          // Slightly smaller hitbox for blocks
+          // Clamp inset to ensure positive dimensions
+          const inset = Math.min(BLOCK_HITBOX_INSET, Math.min(obsW, obsH) / 2 - 1);
           obsRect = { 
-            x: obsPixelX + blockInset, 
-            y: obsPixelY + blockInset, 
-            w: obsW - (blockInset * 2), 
-            h: obsH - (blockInset * 2) 
+            x: obsPixelX + inset, 
+            y: obsPixelY + inset, 
+            w: Math.max(1, obsW - (inset * 2)), 
+            h: Math.max(1, obsH - (inset * 2)) 
           };
         } else {
           obsRect = { x: obsPixelX, y: obsPixelY, w: obsW, h: obsH };
