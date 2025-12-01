@@ -4,7 +4,8 @@ import {
 } from '../types';
 import {
   GRAVITY, JUMP_FORCE, MOVE_SPEED, TERMINAL_VELOCITY,
-  GRID_SIZE, PLAYER_SIZE, CAMERA_OFFSET_X, COLORS, FLOOR_Y_GRID
+  GRID_SIZE, PLAYER_SIZE, CAMERA_OFFSET_X, COLORS, FLOOR_Y_GRID,
+  SPIKE_HITBOX_INSET_X, SPIKE_HITBOX_INSET_TOP, SPIKE_HITBOX_INSET_BOTTOM, BLOCK_HITBOX_INSET
 } from '../constants';
 import { audioService } from '../services/audioService';
 import { PeerService } from '../services/peerService';
@@ -397,7 +398,35 @@ const GameEngine: React.FC<GameEngineProps> = ({
         const obsW = obs.width || GRID_SIZE;
         const obsPixelX = obs.x * GRID_SIZE;
         const obsPixelY = FLOOR_PIXEL_Y - (obs.y * GRID_SIZE) - obsH;
-        const obsRect = { x: obsPixelX, y: obsPixelY, w: obsW, h: obsH };
+        
+        // Create hitbox with appropriate insets based on obstacle type
+        let obsRect: { x: number, y: number, w: number, h: number };
+        
+        if (obs.type === ObstacleType.SPIKE) {
+          // Significantly smaller hitbox for spikes - triangular shape means edges are less dangerous
+          // Clamp insets to ensure positive dimensions
+          const insetX = Math.min(SPIKE_HITBOX_INSET_X, obsW / 2 - 1);
+          const insetTop = Math.min(SPIKE_HITBOX_INSET_TOP, obsH / 2 - 1);
+          const insetBottom = Math.min(SPIKE_HITBOX_INSET_BOTTOM, obsH - insetTop - 1);
+          obsRect = { 
+            x: obsPixelX + insetX, 
+            y: obsPixelY + insetTop, 
+            w: Math.max(1, obsW - (insetX * 2)), 
+            h: Math.max(1, obsH - insetTop - insetBottom) 
+          };
+        } else if (obs.type === ObstacleType.BLOCK || obs.type === ObstacleType.PLATFORM) {
+          // Slightly smaller hitbox for blocks
+          // Clamp inset to ensure positive dimensions
+          const inset = Math.min(BLOCK_HITBOX_INSET, Math.min(obsW, obsH) / 2 - 1);
+          obsRect = { 
+            x: obsPixelX + inset, 
+            y: obsPixelY + inset, 
+            w: Math.max(1, obsW - (inset * 2)), 
+            h: Math.max(1, obsH - (inset * 2)) 
+          };
+        } else {
+          obsRect = { x: obsPixelX, y: obsPixelY, w: obsW, h: obsH };
+        }
 
         if (checkCollision(pRect, obsRect)) {
           if (obs.type === ObstacleType.SPIKE) {

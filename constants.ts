@@ -2,7 +2,7 @@ import { LevelData, ObstacleType } from './types';
 
 export const GRAVITY = 1.8;
 export const JUMP_FORCE = -21;
-export const MOVE_SPEED = 9.5;
+export const MOVE_SPEED = 8.5;
 export const TERMINAL_VELOCITY = 25;
 
 export const GRID_SIZE = 60; // Size of one block in pixels
@@ -11,6 +11,12 @@ export const FLOOR_Y_GRID = 0; // The floor is at y=0 in grid coordinates
 // Visuals
 export const PLAYER_SIZE = 50;
 export const CAMERA_OFFSET_X = 300; // Player stays at this X on screen
+
+// Hitbox insets (for more forgiving collision detection)
+export const SPIKE_HITBOX_INSET_X = 15; // Horizontal inset from each side
+export const SPIKE_HITBOX_INSET_TOP = 8; // Inset from top of spike
+export const SPIKE_HITBOX_INSET_BOTTOM = 10; // Inset from bottom of spike
+export const BLOCK_HITBOX_INSET = 6; // Inset from all sides of blocks
 
 // Colors
 export const COLORS = {
