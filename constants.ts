@@ -2,7 +2,7 @@ import { LevelData, ObstacleType } from './types';
 
 export const GRAVITY = 1.8;
 export const JUMP_FORCE = -21;
-export const MOVE_SPEED = 9.5;
+export const MOVE_SPEED = 8.5;
 export const TERMINAL_VELOCITY = 25;
 
 export const GRID_SIZE = 60; // Size of one block in pixels
