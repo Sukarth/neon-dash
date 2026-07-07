@@ -161,6 +161,16 @@ Contributions are welcome! Feel free to:
 
 This project is open source and available under the [MIT License](LICENSE).
 
+## 💖 Support
+
+If this project helps or saves you time, consider supporting my work, as it keeps these tools free, open source, and maintained:
+
+[![GitHub Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-%E2%9D%A4-EA4AAA?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/Sukarth)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support-FF5E5B?logo=kofi&logoColor=white)](https://ko-fi.com/sukarth)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-☕-FFDD00?logoColor=black)](https://buymeacoffee.com/sukarth)
+
+Can't donate? Starring the repo ⭐, reporting bugs, and sharing the project help just as much!
+
 ---
 
 <br>
